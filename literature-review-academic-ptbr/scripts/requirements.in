@@ -1,0 +1,19 @@
+# Declarative source for scripts/requirements.txt.
+#
+# Edit this file and regenerate the lockfile via:
+#   uv pip compile scripts\requirements.in -o scripts\requirements.txt --generate-hashes
+#
+# Workflow: requirements.in is the human-edited source of truth (loose
+# bounds); requirements.txt is the machine-generated lockfile (exact
+# versions + SHA256 hashes for supply-chain integrity). Never edit
+# requirements.txt by hand.
+
+# Direct runtime dependencies of the scripts.
+bibtexparser>=1.4,<2          # v2 still in alpha/beta as of 2026-04; pin to v1 series for stability.
+python-docx>=1.0
+pyzotero>=1.10
+rapidfuzz>=3.0
+requests>=2.30
+
+# Toolchain dependency (lockfile generation).
+uv>=0.4

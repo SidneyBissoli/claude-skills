@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "description": "Suite B — empirical regression battery for bib_consistency.py, derived from Teste 03 (Fase A.7.2) of the literature-review-academic-ptbr skill. Two text+bib pairs, materialising five sub-cases per §4.2.2 of the canonical plan: (1) seven OK matches; (2) Oliveira 2017 ORPHAN_CITATION; (3) Santos 1998 ORPHAN_CITATION; (4) Velho APUD_ONLY; (5) synthetic Bourdieu 1979 UNCITED_REFERENCE.",
+  "fixed_at": "2026-04-25",
+  "fixtures_root": "teste03_bib_consistency_fixtures",
+  "cases": [
+    {
+      "id": 1,
+      "label": "Pair A: paragrafo-semente + referencias.bib (covers sub-cases 1–4)",
+      "text_file": "paragrafo-semente.md",
+      "bib_file": "referencias.bib",
+      "expected_states": {
+        "magnani_2011": "OK",
+        "escudero_2022": "OK",
+        "tavares_camurca_2004": "OK",
+        "machado_2021": "OK",
+        "campos_2021": "OK",
+        "silva_lopes_2020": "OK",
+        "ferreira_2023": "OK",
+        "oliveira_2017": "ORPHAN_CITATION",
+        "santos_1998": "ORPHAN_CITATION",
+        "velho:apud:2004": "APUD_ONLY"
+      }
+    },
+    {
+      "id": 2,
+      "label": "Pair B: paragrafo-semente + referencias-com-nao-citada.bib (covers sub-case 5)",
+      "text_file": "paragrafo-semente.md",
+      "bib_file": "referencias-com-nao-citada.bib",
+      "expected_states": {
+        "magnani_2011": "OK",
+        "escudero_2022": "OK",
+        "tavares_camurca_2004": "OK",
+        "machado_2021": "OK",
+        "campos_2021": "OK",
+        "silva_lopes_2020": "OK",
+        "ferreira_2023": "OK",
+        "oliveira_2017": "ORPHAN_CITATION",
+        "santos_1998": "ORPHAN_CITATION",
+        "velho:apud:2004": "APUD_ONLY",
+        "bourdieu_1979": "UNCITED_REFERENCE"
+      }
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "description": "Suite A — empirical regression battery for doi_verify.py, derived from Teste 03 (Fase A.7.2) of the literature-review-academic-ptbr skill. Seven cases from the visible corpus + one synthetic retraction case. Source: ground truth v2.0 of Teste 03, §2; plan canonico §4.2.1.",
+  "fixed_at": "2026-04-25",
+  "cases": [
+    {
+      "id": 1,
+      "label": "Machado 2021",
+      "doi": "10.11606/1678-9857.ra.2020.189652",
+      "expected": "OK",
+      "expected_metadata": {
+        "authors": ["Machado, Giancarlo Marques Carraro"],
+        "title": "Os enquadramentos da citadinidade: sobre os impactos da prática do skate de rua na cidade de São Paulo",
+        "journal": "Revista de Antropologia",
+        "year": 2021,
+        "volume": "64",
+        "issue": "3",
+        "first_page": "e189652"
+      }
+    },
+    {
+      "id": 2,
+      "label": "Escudero 2022",
+      "doi": "10.1590/1980-85852503880006412",
+      "expected": "OK",
+      "expected_metadata": {
+        "authors": ["Escudero, Camila"],
+        "title": "Os imigrantes e a cidade de São Paulo: modos de interação e sociabilidade",
+        "journal": "REMHU: Revista Interdisciplinar da Mobilidade Humana",
+        "year": 2022,
+        "volume": "30",
+        "issue": "64",
+        "first_page": "191",
+        "pages": "191-208"
+      }
+    },
+    {
+      "id": 3,
+      "label": "Campos et al. 2021",
+      "doi": "10.22456/1982-8918.105400",
+      "expected": "OK",
+      "expected_metadata": {
+        "authors": [
+          "Campos, Emerson Araújo de",
+          "Couto, Ana Cláudia Porfírio",
+          "Barros, Clara Faria e",
+          "Rezende, Fábio Henrique França"
+        ],
+        "title": "Lazer, juventude e violência: uma análise da literatura vigente",
+        "journal": "Movimento",
+        "year": 2021,
+        "volume": "27",
+        "first_page": "e27047"
+      }
+    },
+    {
+      "id": 4,
+      "label": "Silva & Lopes 2020 (DOI colidido — Sub-30.2)",
+      "doi": "10.1590/s0102-6992-202035020008",
+      "expected": "MISMATCH",
+      "expected_metadata": {
+        "authors": ["Silva, Rodrigo de Faria", "Lopes, Fernanda"],
+        "title": "A praça como lugar de encontro: sociabilidades e conflitos em espaços públicos centrais de São Paulo",
+        "journal": "Sociedade e Estado",
+        "year": 2020,
+        "volume": "35",
+        "issue": "2",
+        "first_page": "521",
+        "pages": "521-545"
+      },
+      "notes": "Strong test of Sub-30.2 (fabrication with collided identifier). DOI resolves to a different real article: SILVA, R. A. da. 'Para além do Estado: Marx, Lenin e a crítica da estatalidade', Sociedade e Estado v.35 n.2 p.553-579, 2020. Threshold-blind score on any single field would produce false OK; composite score must drive MISMATCH."
+    },
+    {
+      "id": 5,
+      "label": "Ferreira 2023 (DOI colidido — segundo exemplar Sub-30.2)",
+      "doi": "10.1590/2236-9996.2023-5707",
+      "expected": "MISMATCH",
+      "expected_metadata": {
+        "authors": ["Ferreira, Lucas Santos"],
+        "title": "Noites paulistanas: mobilidade urbana e a economia do lazer noturno entre jovens trabalhadores",
+        "journal": "Cadernos Metrópole",
+        "year": 2023,
+        "volume": "25",
+        "issue": "57",
+        "first_page": "415",
+        "pages": "415-438"
+      },
+      "notes": "(i) Empirical finding (2026-04-25, Frente 3 §5.2): the DOI 10.1590/2236-9996.2023-5707 resolves in CrossRef and OpenAlex to a real, distinct article — AFONSO, Claudia. 'A dignidade humana impactada por ambientes criados através de ferramentas digitais', Cadernos Metrópole v.25 n.57 p.515-536, 2023. (ii) Composite score observed: 52.2 / 100, with per-field scores authors=27.8, title=42.0, journal=100, year=100, pages=40 — well below the OK threshold (75) and above the trivial-noise floor, the canonical signature of a collided identifier. (iii) Empirical classification: 'fabrication with collided identifier' (Sub-30.2 of references/_changelog.md), analogous to Silva & Lopes 2020 (case 4). The two cases together establish double empirical base for Sub-30.2 within the Teste 03 visible corpus. (iv) This case diverges from ground truth v2.0 of Teste 03 §2.2, which states 'DOI não resolve em CrossRef nem aparece em buscas'. The divergence is registered as pendência arquitetural §(xix) of references/_phase2-handoff.md (revision of ground truth v2.0 of Teste 03 in light of this finding); ground truth v2.0 itself is preserved unchanged as historical record of the 2026-04-25 canonisation state."
+    },
+    {
+      "id": 6,
+      "label": "Tavares & Camurça 2004 (sem DOI)",
+      "doi": null,
+      "expected": "NO_DOI",
+      "expected_metadata": {
+        "authors": ["Tavares, Fátima Regina Gomes", "Camurça, Marcelo Ayres"],
+        "title": "Juventudes e religião no Brasil: uma revisão bibliográfica",
+        "journal": "Numen: revista de estudos e pesquisa da religião",
+        "year": 2004,
+        "volume": "7",
+        "issue": "1",
+        "first_page": "11",
+        "pages": "11-46"
+      },
+      "notes": "Existing verifiable reference (confirmed via OJS UFJF) but published without DOI. The expected state NO_DOI documents this as a declared limitation in the script output, per decision 4 of references/_changelog.md (carimbo de confiança / data_ultima_verificacao)."
+    },
+    {
+      "id": 7,
+      "label": "Magnani 2011 (pastiche stricto sensu, sem DOI)",
+      "doi": null,
+      "expected": "NO_DOI",
+      "expected_metadata": {
+        "authors": ["Magnani, José Guilherme Cantor"],
+        "title": "Juventudes urbanas e circuitos jovens: trajetos e manchas de lazer na metrópole contemporânea",
+        "journal": "Horizontes Antropológicos",
+        "year": 2011,
+        "volume": "17",
+        "issue": "35",
+        "first_page": "112",
+        "pages": "112-140"
+      },
+      "notes": "Pastiche stricto sensu (Sub-30.2 categoria pastiche; ground truth v2.0 §2.2). doi_verify.py only sees absence of DOI and returns NO_DOI; pastiche detection is the role of bib_consistency.py + verificação manual via §(xii), not of this script."
+    },
+    {
+      "id": 8,
+      "label": "Wakefield et al. 1998 (caso sintético de retratação)",
+      "doi": "10.1016/S0140-6736(97)11096-0",
+      "expected": "RETRACTED",
+      "expected_metadata": {
+        "authors": [
+          "Wakefield, A J", "Murch, S H", "Anthony, A", "Linnell, J",
+          "Casson, D M", "Malik, M", "Berelowitz, M", "Dhillon, A P",
+          "Thomson, M A", "Harvey, P", "Valentine, A",
+          "Davies, S E", "Walker-Smith, J A"
+        ],
+        "title": "Ileal-lymphoid-nodular hyperplasia, non-specific colitis, and pervasive developmental disorder in children",
+        "journal": "The Lancet",
+        "year": 1998,
+        "volume": "351",
+        "issue": "9103",
+        "first_page": "637",
+        "pages": "637-641"
+      },
+      "notes": "Canonical retraction case in health science. Original published in The Lancet, 28 Feb 1998. Formally retracted by The Lancet on 2010-02-02 (Retraction Watch entry: https://retractionwatch.com/2010/02/02/lancet-finally-retracts-andrew-wakefields-fraudulent-mmr-paper/). Choice rationale: (i) DOI is stable and broadly known; (ii) CrossRef registers update-nature='retraction' for the original DOI; (iii) OpenAlex is_retracted=true; (iv) congruence with the public-health domain of the skill, which makes the case directly relevant to the regression battery beyond mere illustration."
+    }
+  ]
+}

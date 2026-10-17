@@ -1,0 +1,38 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Edit README.Rmd, then run devtools::build_readme(). -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# {{PKGNAME}}
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+*[Leia em português](README.pt-BR.md)*
+
+{{DESCRIPTION}}
+
+## Installation
+
+Install the development version from GitHub:
+
+```r
+# install.packages("pak")
+pak::pak("SidneyBissoli/{{PKGNAME}}")
+```
+
+## Example
+
+```{r example}
+library({{PKGNAME}})
+```
