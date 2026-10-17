@@ -28,4 +28,4 @@ strips from `package-lock.json`.
 
 ## License
 
-MIT, per skill (see the `LICENSE` file in each folder).
+MIT (`LICENSE` at the root, repeated in each skill folder so a skill copied alone keeps it).

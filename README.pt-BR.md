@@ -28,4 +28,4 @@ Windows apaga do `package-lock.json`.
 
 ## Licença
 
-MIT, por skill (veja o arquivo `LICENSE` de cada pasta).
+MIT (`LICENSE` na raiz, repetido em cada pasta para que uma skill copiada sozinha o leve junto).
