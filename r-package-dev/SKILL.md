@@ -92,13 +92,18 @@ task. Each of those is a separate, user-approved change, in its own commit.
   they differ.
 - **Formatting:** a PostToolUse hook (`scripts/air-hook.mjs`, in the user
   settings.json) runs `air format` on every `.R` file you Edit or Write, but
-  only under an `air.toml`/`.air.toml` (welfarebR since 2026-10-16; the other
-  five not yet). It does not see shell edits: after `sed`, heredocs or
+  only under an `air.toml`/`.air.toml` (all six packages since 2026-10-17).
+  It does not see shell edits: after `sed`, heredocs or
   scripts that touch `.R` files, run `air format .` yourself. After an Edit on
   a formatted package, Read before the next Edit of the same region — the
   hook may have reflowed it. Adopting Air in a package = three
   commits (config, `style:` formatting only, `.git-blame-ignore-revs`),
-  merged with a merge commit so the formatting SHA survives.
+  merged with a merge commit so the formatting SHA survives. Air is not
+  whitespace-only: it adds braces around one-line `if`/`for` bodies, so prove
+  "formatting only" by comparing `getParseData()` terminal tokens (only `{`/`}`
+  pairs may differ), not by reading the diff. `.R` files that ship with data
+  (reading examples under `data/`) are not package code: list them in the
+  `air.toml` `exclude`.
 
 ## 2. Defaults for NEW packages (do not re-ask)
 
