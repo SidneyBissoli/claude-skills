@@ -8,8 +8,7 @@ description: >-
   balões ancorados em trechos, anotar a fonte de cada número, transplantar
   observações de um documento para versões parecidas, trocar o autor dos
   balões, conferir se sobreviveram a uma edição) vão pelo motor Python da
-  skill, que monta as partes OOXML que o Word exige e verifica cada âncora. Use
-  sempre que o usuário pedir para editar, corrigir, revisar, comentar ou
+  skill. Use sempre que o usuário pedir para editar, corrigir, revisar, comentar ou
   anotar um documento Word, ou mandar um caminho terminado em .docx para
   manipulação, mesmo sem citar a skill. Típico em pareceres, manuscritos,
   releases e relatórios revisados por várias pessoas. Não use para só extrair
