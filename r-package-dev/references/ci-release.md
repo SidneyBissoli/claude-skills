@@ -18,6 +18,18 @@ fallbacks only. Existing packages already carry their own workflows
 `etl-mirror.yaml`); edit them in place, do not replace them with the
 standard ones.
 
+**Every R setup step carries a deadline** (`timeout-minutes: 10` on
+`r-lib/actions/setup-r@v2`; `15` on `setup-r-dependencies@v2` where the
+job installs binaries only — ubuntu + current release with
+`use-public-rspm` — and `45` in the check matrix, because on R devel, or
+for a package whose binary P3M has not built yet, pak compiles from source:
+duckdb alone took 13 min on 2026-10-24, and that is work, not a stall) and
+every CI job a ceiling (`timeout-minutes: 60`; the default is 360). Measured
+2026-10-23: the steps take 20-80 s when the Ubuntu apt mirror of the
+runners answers, and hung for two hours when `azure.archive.ubuntu.com`
+crawled, holding the PRs; past the deadline the job fails fast and is
+re-run. The assets carry it; add it when touching an older workflow.
+
 Validate any workflow edit with `actionlint`, not with a YAML parser: a
 parseable file can still be a broken workflow. If the runner lacks a system
 library (e.g. GDAL), add `extra-packages: any::pkgname` or an `apt-get` step.
