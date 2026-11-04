@@ -62,7 +62,9 @@ if [ $quick = 0 ]; then
       uv run --no-sync zensical build --strict || status=1
     elif declares mkdocs-material || declares mkdocs; then
       step "mkdocs build --strict"
-      NO_MKDOCS_2_WARNING=1 uv run --no-sync mkdocs build --strict --quiet || status=1
+      # No --quiet: in mkdocs 1.6.1 it drops warnings before strict mode
+      # counts them, so a broken link exits 0 (measured 2026-11-03).
+      NO_MKDOCS_2_WARNING=1 uv run --no-sync mkdocs build --strict || status=1
     else
       skip "docs" "neither zensical nor mkdocs in pyproject.toml"
     fi

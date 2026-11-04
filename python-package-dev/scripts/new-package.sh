@@ -34,12 +34,15 @@ if [ -n "$(git -C "$template" status --porcelain -- copier.yml templates/)" ]; t
   echo "Template has uncommitted changes in $template; commit them first." >&2; exit 2
 fi
 
-# PyPI name check (informative: the name may still be free on PyPI but taken
-# by a normalised variant, which PyPI also refuses).
-code="$(curl -s -o /dev/null -w '%{http_code}' "https://pypi.org/pypi/$name/json" || true)"
-if [ "$code" = "200" ]; then
-  echo "WARNING: '$name' already exists on PyPI; pick another name before publishing."
-fi
+# PyPI name check (informative). The JSON API normalises names, so a 200 also
+# catches variants PyPI would refuse (zope-interface -> zope.interface).
+# Anything other than 200/404 means "could not check", never "free".
+code="$(curl -s -m 15 -o /dev/null -w '%{http_code}' "https://pypi.org/pypi/$name/json" || true)"
+case "$code" in
+  200) echo "WARNING: '$name' already exists on PyPI; pick another name before publishing.";;
+  404) ;;
+  *) echo "WARNING: could not check '$name' on PyPI (HTTP ${code:-none}); check it before publishing.";;
+esac
 
 copier copy --vcs-ref HEAD --defaults \
   --data "project_name=$name" \

@@ -234,8 +234,10 @@ Full detail in `references/conventions.md`. The short list:
   plugins outside its supported list, so a plugin that "does nothing" is
   probably unsupported (list:
   https://zensical.org/docs/compatibility/mkdocs/plugins/). Older projects on
-  mkdocs-material: same `--strict` rule; the end-of-life banner (2027-05-05)
-  is informational.
+  mkdocs-material: same `--strict` rule, and never with `--quiet` (mkdocs
+  1.6.1 then drops the warnings before strict mode counts them: a broken link
+  exits 0, measured 2026-11-03); the end-of-life banner (2027-05-05) is
+  informational.
 
 ## 8. CI, docs and release
 
