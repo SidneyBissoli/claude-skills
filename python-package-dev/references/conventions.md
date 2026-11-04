@@ -204,4 +204,4 @@ def test_cache_is_written(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> No
 | `requests` | `httpx` |
 | pandas by default | polars |
 | `print()` for progress | `logging` / opt-in progress |
-| Sphinx + reST docstrings | mkdocs + mkdocstrings, Google docstrings |
+| Sphinx + reST docstrings; mkdocs-material | Zensical + mkdocstrings, Google docstrings |

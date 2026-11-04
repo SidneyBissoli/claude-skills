@@ -5,7 +5,7 @@
 | Workflow | Trigger | What it does |
 |---|---|---|
 | `ci.yaml` | push to `main`, PRs, manual | matrix ubuntu/windows × Python (minimum → 3.13): `uv sync --locked`, ruff check + format check, pyright, pytest with coverage (fails under 75 %) |
-| `docs.yaml` | push to `main`, PRs (build only), manual | `mkdocs build --strict`; on `main`, deploys `site/` to GitHub Pages |
+| `docs.yaml` | push to `main`, PRs (build only), manual | `zensical build --strict`; on `main`, deploys `site/` to GitHub Pages |
 | `release.yaml` | tag `v*` | checks tag = `pyproject.toml` version, `uv build`, smoke-tests the wheel in a clean env, publishes to PyPI by trusted publishing |
 
 Conventions kept in all three (copy them into any workflow you add):
@@ -44,9 +44,12 @@ gh api -X POST repos/SidneyBissoli/<pkg>/pages -f build_type=workflow
 The site URL is `https://sidneybissoli.github.io/<pkg>/` (already in
 `mkdocs.yml`, `pyproject.toml` and `CITATION.cff`). Never commit `site/`.
 
-Material for MkDocs reaches end of life on 2027-05-05 (banner printed by
-9.8.0). Its successor, Zensical, reads the same `mkdocs.yml`; plan the switch
-in the template, not package by package.
+The site is built by Zensical (the successor of Material for MkDocs, which
+reaches end of life on 2027-05-05), reading `mkdocs.yml`. The template moved
+to it on 2026-11-03; packages generated before that get it with
+`copier update`. Zensical is still 0.0.x and releases often: keep the
+`zensical>=` lower bound, let `uv lock --upgrade-package zensical` move it,
+and run `zensical build --strict` after every upgrade.
 
 ## PyPI trusted publishing (once per package)
 

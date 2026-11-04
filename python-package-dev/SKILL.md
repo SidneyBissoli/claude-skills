@@ -1,6 +1,6 @@
 ---
 name: python-package-dev
-description: Modern Python package development (2026 practice) for creating, extending, testing, type-checking, documenting and releasing Python packages on this Windows machine (uv, uv_build, src layout, ruff, pyright strict, pytest, mkdocs-material, GitHub Actions, PyPI trusted publishing; packages under C:\dev\python-packages, hosted as SidneyBissoli on GitHub, published on PyPI). Use it whenever the user wants to create a Python package, add a function, module, test, dependency, docs page or CLI to one, fix ruff / pyright / pytest / coverage / mkdocs / uv build errors, set up CI or a PyPI release, update a package from its copier template, or mentions "pacote Python", "criar pacote Python", pyproject.toml, pytest, pyright, PyPI, uv build, copier. Also use it when editing any file inside a directory whose pyproject.toml has a [project] table, even if the user never says "package".
+description: Modern Python package development (2026 practice) for creating, extending, testing, type-checking, documenting and releasing Python packages on this Windows machine (uv, uv_build, src layout, ruff, pyright strict, pytest, Zensical docs, GitHub Actions, PyPI trusted publishing; packages under C:\dev\python-packages, hosted as SidneyBissoli on GitHub, published on PyPI). Use it whenever the user wants to create a Python package, add a function, module, test, dependency, docs page or CLI to one, fix ruff / pyright / pytest / coverage / Zensical or mkdocs / uv build errors, set up CI or a PyPI release, update a package from its copier template, or mentions "pacote Python", "criar pacote Python", pyproject.toml, pytest, pyright, PyPI, uv build, copier. Also use it when editing any file inside a directory whose pyproject.toml has a [project] table, even if the user never says "package".
 ---
 
 # Python package development
@@ -25,7 +25,7 @@ still do. Checked 2026-11-03:
 
 | Project | Kind | Rules | Differs from section 2 |
 |---|---|---|---|
-| `mcp\geosgb-br-mcp` (`geosgb-mcp`) | package, MCP server | `ROADMAP.md` | hatchling; no pyright, no mkdocs |
+| `mcp\geosgb-br-mcp` (`geosgb-mcp`) | package, MCP server | `ROADMAP.md` | hatchling; no pyright, no docs site |
 | `pipelines` | application | `~\.claude\CLAUDE.md` § pipelines, `claude_auth.py` | pinned `anthropic`/`claude-agent-sdk`; keep `uv.lock` |
 | `utils\pdf2md` | application | `~\.claude\CLAUDE.md` § pdf2md | `marker-pdf<2` pinned; do not swap libs |
 | `tools\jlab` | application | `~\.claude\CLAUDE.md` § notebooks | not a git repository |
@@ -33,7 +33,7 @@ still do. Checked 2026-11-03:
 | `python\fable-foundation-backend`, `sandbox-python` | applications | none | nothing |
 
 Do not retrofit an existing project with the new-package defaults (uv_build,
-pyright strict, the pre-commit config, mkdocs, README.pt-BR.md) as a side
+pyright strict, the pre-commit config, the docs site, README.pt-BR.md) as a side
 effect of another task. Each is a separate, user-approved change in its own
 commit.
 
@@ -44,7 +44,7 @@ commit.
   (`~\.local\bin\uv.exe`), which manages Pythons 3.11, 3.12 and 3.13.
   `PYTHONUTF8=1` is set; still pass `encoding="utf-8"` to every `open()`.
 - **CLI tools** (`uv tool install`, in `~\.local\bin`): `copier` 9.19, `ruff`,
-  `pre-commit`. pytest, pyright, mkdocs and ruff for a package come from the
+  `pre-commit`. pytest, pyright, zensical and ruff for a package come from the
   package's own dev groups (`uv run <tool>`), so their versions are the ones in
   its `uv.lock`. `actionlint`: `uvx --from actionlint-py actionlint`.
   Node 24 is on PATH (pyright's PyPI wrapper uses it). `jq` is **not**
@@ -66,7 +66,7 @@ commit.
   `.gitattributes` `* text=auto eol=lf`. Measure CR by bytes
   (`tr -cd '\r' < f | wc -c`), not with grep.
 - **Up-to-date docs:** Context7 (`mcp__claude_ai_Context7__*`) for uv, ruff,
-  pytest, pyright, polars, httpx, mkdocstrings. Check versions on PyPI
+  pytest, pyright, polars, httpx, mkdocstrings, zensical. Check versions on PyPI
   (`https://pypi.org/pypi/<pkg>/json`) before pinning anything.
 
 ## 2. Defaults for NEW packages (do not re-ask)
@@ -83,7 +83,7 @@ commit.
 | HTTP | `httpx` (sync client, explicit timeout, `User-Agent` naming the package); tests offline with `respx` or `pytest-httpx`; never the network in docstring examples. |
 | Data | polars for new code (pandas only when a consumer requires it); heavy optional dependencies in `[project.optional-dependencies]`, imported lazily. |
 | Tests | pytest 9, doctests on, coverage ≥ 75 % (branch); integration tests marked `integration`, run only with `<PKG>_INTEGRATION=true`. |
-| Docs | Google-style docstrings rendered by mkdocstrings; mkdocs-material site on GitHub Pages. |
+| Docs | Google-style docstrings rendered by mkdocstrings; Zensical site (reading `mkdocs.yml`) on GitHub Pages. |
 | License | MIT, copyright "Sidney da Silva Pereira Bissoli", email sbissoli76@gmail.com; `CITATION.cff`. |
 
 ## 3. Workflow A: create a new package
@@ -137,7 +137,7 @@ Every change goes through this loop, in this order.
    `uv run ruff format`, `uv run pyright`.
 7. **Gate** before every commit that touches code or `pyproject.toml`, from
    the package root: `bash ~/.claude/skills/python-package-dev/scripts/check.sh`
-   (lock, ruff, pyright, pytest with coverage, mkdocs `--strict`, `uv build`;
+   (lock, ruff, pyright, pytest with coverage, `zensical build --strict`, `uv build`;
    `--quick` skips the last two, `--fix` lets ruff rewrite). Steps whose tool
    the project does not declare are skipped, so it works on older projects.
    A failing step is a bug unless you can explain it.
@@ -179,7 +179,9 @@ Every change goes through this loop, in this order.
   CHANGELOG "Deprecated".
 - **Template update:** with a clean, committed tree,
   `copier update --vcs-ref HEAD --skip-answered`; review the diff and any
-  `.rej`/conflict markers; run `check.sh`; commit as
+  `.rej`/conflict markers; if `pyproject.toml` changed, run `uv lock` and
+  `uv sync` (measured: the update leaves `uv.lock` stale, and CI's
+  `uv sync --locked` would fail); run `check.sh`; commit `uv.lock` with it as
   `chore: update from the python-package template`.
 
 ## 6. Conventions that make code look current
@@ -225,9 +227,15 @@ Full detail in `references/conventions.md`. The short list:
 - **uv:** `uv sync --locked` failing in CI means `uv.lock` is stale: run
   `uv lock` and commit it. `uv build` puts `pyproject.toml.orig` in the sdist
   (uv_build 0.13 normalises the manifest): expected, not a bug.
-- **mkdocs --strict:** an unresolved cross-reference or a docstring parsing
-  warning fails the build; the message names the object. The banner about
-  Material reaching end of life (2027-05-05) is informational.
+- **zensical build --strict:** a broken link, an unresolved cross-reference or
+  a docstring parsing warning fails the build; the message names the page or
+  object. Always pass `--strict`: without it Zensical prints the issue and
+  still exits 0 (measured with 0.0.74). Zensical silently ignores MkDocs
+  plugins outside its supported list, so a plugin that "does nothing" is
+  probably unsupported (list:
+  https://zensical.org/docs/compatibility/mkdocs/plugins/). Older projects on
+  mkdocs-material: same `--strict` rule; the end-of-life banner (2027-05-05)
+  is informational.
 
 ## 8. CI, docs and release
 
