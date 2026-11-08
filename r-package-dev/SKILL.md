@@ -36,7 +36,7 @@ task. Each of those is a separate, user-approved change, in its own commit.
 
 ## 1. This environment (facts, not preferences)
 
-- **Windows 11, R 4.6.1** at `C:\Program Files\R\R-4.6.1`, **Rtools45**
+- **Windows 11, R 4.6.2** at `C:\Program Files\R\R-4.6.2`, **Rtools45**
   (`pkgbuild::has_build_tools()` is TRUE). Personal library
   `~/AppData/Local/R/win-library/4.6`. R's `~` depends on the launcher:
   RStudio (no `HOME` set) uses `%USERPROFILE%\OneDrive\Documentos`, where
